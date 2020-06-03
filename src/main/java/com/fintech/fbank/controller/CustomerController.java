@@ -2,6 +2,7 @@ package com.fintech.fbank.controller;
 
 import com.fintech.fbank.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,8 +25,8 @@ public class CustomerController {
     }
 
     @PostMapping("/saveCustomer")
-    public String saveCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public String saveCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "customer-form";
         }
         customerService.saveCustomer(customer);
@@ -33,14 +34,14 @@ public class CustomerController {
     }
 
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("customerId") int idCus,Model model){
-        Customer customer=customerService.getCustomerById(idCus);
-        model.addAttribute("customer",customer);
+    public String showFormForUpdate(@RequestParam("customerId") int idCus, Model model) {
+        Customer customer = customerService.getCustomerById(idCus);
+        model.addAttribute("customer", customer);
         return "customer-form";
     }
 
     @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("customerId") int idCus){
+    public String deleteCustomer(@RequestParam("customerId") int idCus) {
         customerService.deleteCustomer(idCus);
         return "redirect:/list";
     }
@@ -53,4 +54,10 @@ public class CustomerController {
     }
 
 
+    @RequestMapping(value = "/customer/{id}",
+            produces = {"application/json", "application/xml"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Customer getCustomerById(@PathVariable int id) {
+        return customerService.getCustomerById(id);
+    }
 }

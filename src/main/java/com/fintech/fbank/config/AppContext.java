@@ -13,6 +13,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -20,10 +22,16 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
+@EnableWebMvc
 @ComponentScan(basePackages = {"com.fintech.fbank.*"})
 public class AppContext implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");
+    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
