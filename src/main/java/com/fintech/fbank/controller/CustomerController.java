@@ -2,7 +2,6 @@ package com.fintech.fbank.controller;
 
 import com.fintech.fbank.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,10 +53,10 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(value = "/customer/{id}",
+    @RequestMapping(value = "/customer/s",
             produces = {"application/json", "application/xml"}, method = RequestMethod.GET)
     @ResponseBody
-    public Customer getCustomerById(@PathVariable int id) {
-        return customerService.getCustomerById(id);
+    public List<Customer> getCustomerListJson() {
+        return customerService.getCustomer();
     }
 }

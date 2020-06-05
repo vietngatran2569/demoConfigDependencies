@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableTransactionManagement
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.fintech.fbank.*"})
+
 public class AppContext implements WebMvcConfigurer {
     @Autowired
     private Environment environment;
@@ -37,7 +38,7 @@ public class AppContext implements WebMvcConfigurer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
-        sessionFactoryBean.setPackagesToScan(new String[]{"com/fintech/fbank/entity"});
+        sessionFactoryBean.setPackagesToScan(new String[]{"com.fintech.fbank.entity"});
         sessionFactoryBean.setHibernateProperties(hibernateProperties());
         return sessionFactoryBean;
     }
@@ -76,7 +77,4 @@ public class AppContext implements WebMvcConfigurer {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
-
-
 }
